@@ -10,15 +10,68 @@ namespace ChatGPT.SessionManager.API.Controllers;
 public class SessionManagerController : ControllerBase
 {
     private readonly ILogger<SessionManagerController> _logger;
+    private readonly ISessionManagerService _sessionManagerService;
 
-    public SessionManagerController(ILogger<SessionManagerController> logger)
+    public SessionManagerController(ILogger<SessionManagerController> logger, ISessionManagerService sessionManagerService)
     {
         _logger = logger;
+        _sessionManagerService = sessionManagerService;
     }
 
-    [HttpGet(Name = "users")]
-    public IEnumerable<UserRegistration> Get()
+    [HttpPost("users")]
+    public async Task<IActionResult> AddUser([FromBody] UserRegistration newUser)
     {
-        return Enumerable.Repeat(1, 10).Select((x) => new UserRegistration()  { Name = x.ToString() });
+        var createdUser = await _sessionManagerService.AddUser(newUser);
+        return CreatedAtAction(nameof(AddUser), new { id = createdUser.Id }, createdUser);
+    }
+
+    [HttpGet("users")]
+    public async Task<IEnumerable<UserRegistration>> GetAllUsers()
+    {
+        return await _sessionManagerService.GetAllUsers();
+    }
+
+    [HttpGet("users/{id:int}")]
+    public async Task<IActionResult> GetUserById(int id)
+    {
+        var user = await _sessionManagerService.GetUserById(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+        return Ok(user);
+    }
+
+    [HttpGet("users/{name}")]
+    public async Task<IActionResult> GetUserByName(string name)
+    {
+        var user = await _sessionManagerService.GetUserByName(name);
+        if (user == null)
+        {
+            return NotFound();
+        }
+        return Ok(user);
+    }
+
+    [HttpPut("users/")]
+    public async Task<IActionResult> UpdateUser([FromBody] UserRegistration updatedUser)
+    {
+        var result = await _sessionManagerService.UpdateUser(updatedUser);
+        if (!result)
+        {
+            return NotFound();
+        }
+        return NoContent();
+    }
+
+    [HttpDelete("users/{id:int}")]
+    public async Task<IActionResult> DeleteUser(int id)
+    {
+        var result = await _sessionManagerService.DeleteUser(id);
+        if (!result)
+        {
+            return NotFound();
+        }
+        return NoContent();
     }
 }

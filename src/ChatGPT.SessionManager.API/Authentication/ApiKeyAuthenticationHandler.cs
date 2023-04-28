@@ -8,13 +8,15 @@ namespace ChatGPT.SessionManager.API.Controllers;
 public class ApiKeyAuthenticationHandler : AuthenticationHandler<ApiKeyAuthenticationOptions>
 {
     private const string ApiKeyHeaderName = "X-Api-Key";
-
+    private readonly IConfiguration _config;
     public ApiKeyAuthenticationHandler(
         IOptionsMonitor<ApiKeyAuthenticationOptions> options,
         ILoggerFactory logger,
         UrlEncoder encoder,
+        IConfiguration config,
         ISystemClock clock) : base(options, logger, encoder, clock)
     {
+        _config = config;
     }
 
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -43,6 +45,6 @@ public class ApiKeyAuthenticationHandler : AuthenticationHandler<ApiKeyAuthentic
     private bool IsValidApiKey(string apiKey)
     {
         // Replace this with your actual API key validation logic.
-        return apiKey == "dyour-valid-api-key";
+        return apiKey == _config["XApiKey"];
     }
 }
