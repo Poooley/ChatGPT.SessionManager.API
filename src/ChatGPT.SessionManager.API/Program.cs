@@ -1,4 +1,6 @@
+using ChatGPT.SessionManager.API;
 using ChatGPT.SessionManager.API.Controllers;
+using ChatGPT.SessionManager.API.Services;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSingleton<ISessionManagerService, SessionManagerService>();
 builder.Configuration.AddUserSecrets<Program>();
 
 builder.Services.AddSwaggerGen(c =>
