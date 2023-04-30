@@ -9,7 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
-src/ChatGPT.SessionManager.API/UserRegistrations.json
+src/ChatGPT.SessionManager.API/UserEntitys.json
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

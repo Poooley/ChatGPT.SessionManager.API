@@ -5,47 +5,47 @@ namespace ChatGPT.SessionManager.API.Services;
 
 public class SessionManagerService : ISessionManagerService
 {
-    private readonly string _filePath = "UserRegistrations.json";
-    private List<UserRegistration> _userRegistrations = new();
+    private readonly string _filePath = "UserEntitys.json";
+    private List<UserEntity> entities = new();
 
     public SessionManagerService()
     {
         if (File.Exists(_filePath))
         {
             var json = File.ReadAllText(_filePath);
-            _userRegistrations = JsonSerializer.Deserialize<List<UserRegistration>>(json);
+            entities = JsonSerializer.Deserialize<List<UserEntity>>(json);
         }
         else
         {
-            _userRegistrations = new List<UserRegistration>();
+            entities = new List<UserEntity>();
         }
     }
 
-    public Task<IEnumerable<UserRegistration>> GetAllUsers()
+    public Task<IEnumerable<UserEntity>> GetAllUsers()
     {
-        return Task.FromResult(_userRegistrations.AsEnumerable());
+        return Task.FromResult(entities.AsEnumerable());
     }
 
-    public Task<UserRegistration> GetUserById(int id)
+    public Task<UserEntity> GetUserById(string id)
     {
-        return Task.FromResult(_userRegistrations.FirstOrDefault(u => u.Id == id));
+        return Task.FromResult(entities.FirstOrDefault(u => u.Id == id));
     }
 
-    public Task<UserRegistration> GetUserByName(string name)
+    public Task<UserEntity> GetUserByName(string name)
     {
-        return Task.FromResult(_userRegistrations.FirstOrDefault(u => u.Name == name));
+        return Task.FromResult(entities.FirstOrDefault(u => u.Name == name));
     }
 
-    public async Task<UserRegistration> AddUser(UserRegistration newUser)
+    public async Task<UserEntity> AddUser(UserEntity newUser)
     {
-        _userRegistrations.Add(newUser);
+        entities.Add(newUser);
         await SaveToFileAsync();
         return newUser;
     }
 
-    public async Task<bool> UpdateUser(UserRegistration updatedUser)
+    public async Task<bool> UpdateUser(UserEntity updatedUser)
     {
-        var user = _userRegistrations.FirstOrDefault(u => u.Id == updatedUser.Id);
+        var user = entities.FirstOrDefault(u => u.Id == updatedUser.Id);
         if (user == null)
         {
             return false;
@@ -56,22 +56,54 @@ public class SessionManagerService : ISessionManagerService
         return true;
     }
 
-    public async Task<bool> DeleteUser(int id)
+    public async Task<bool> DeleteUser(string id)
     {
-        var user = _userRegistrations.FirstOrDefault(u => u.Id == id);
+        var user = entities.FirstOrDefault(u => u.Id == id);
         if (user == null)
         {
             return false;
         }
 
-        _userRegistrations.Remove(user);
+        entities.Remove(user);
+        await SaveToFileAsync();
+        return true;
+    }
+
+    public async Task<bool> LockUser(string id)
+    {
+        if (string.IsNullOrEmpty(id))
+            return false;
+        
+        UserEntity? user = entities.FirstOrDefault(u => u.Id == id);
+        
+        if (user is null)
+            return false;
+            
+        if (entities.FirstOrDefault(e => e.IsLocked == true) is not null)
+            return false;
+        
+        user.IsLocked = true;
+        
+        await SaveToFileAsync();
+        return true;
+    }
+
+    public async Task<bool> UnlockUser(string id)
+    {
+        UserEntity? user = entities.FirstOrDefault(u => u.Id == id);
+        
+        if (user is null)
+            return false;
+        
+        user.IsLocked = false;
+
         await SaveToFileAsync();
         return true;
     }
 
     private async Task SaveToFileAsync()
     {
-        var json = JsonSerializer.Serialize(_userRegistrations, new JsonSerializerOptions() { WriteIndented = true });
+        var json = JsonSerializer.Serialize(entities, new JsonSerializerOptions() { WriteIndented = true });
         await File.WriteAllTextAsync(_filePath, json);
     }
 }

@@ -19,20 +19,20 @@ public class SessionManagerController : ControllerBase
     }
 
     [HttpPost("users")]
-    public async Task<IActionResult> AddUser([FromBody] UserRegistration newUser)
+    public async Task<IActionResult> AddUser([FromBody] UserEntity newUser)
     {
         var createdUser = await _sessionManagerService.AddUser(newUser);
         return CreatedAtAction(nameof(AddUser), new { id = createdUser.Id }, createdUser);
     }
 
     [HttpGet("users")]
-    public async Task<IEnumerable<UserRegistration>> GetAllUsers()
+    public async Task<IEnumerable<UserEntity>> GetAllUsers()
     {
         return await _sessionManagerService.GetAllUsers();
     }
 
     [HttpGet("users/{id:int}")]
-    public async Task<IActionResult> GetUserById(int id)
+    public async Task<IActionResult> GetUserById(string id)
     {
         var user = await _sessionManagerService.GetUserById(id);
         if (user == null)
@@ -54,7 +54,7 @@ public class SessionManagerController : ControllerBase
     }
 
     [HttpPut("users/")]
-    public async Task<IActionResult> UpdateUser([FromBody] UserRegistration updatedUser)
+    public async Task<IActionResult> UpdateUser([FromBody] UserEntity updatedUser)
     {
         var result = await _sessionManagerService.UpdateUser(updatedUser);
         if (!result)
@@ -65,7 +65,7 @@ public class SessionManagerController : ControllerBase
     }
 
     [HttpDelete("users/{id:int}")]
-    public async Task<IActionResult> DeleteUser(int id)
+    public async Task<IActionResult> DeleteUser(string id)
     {
         var result = await _sessionManagerService.DeleteUser(id);
         if (!result)
