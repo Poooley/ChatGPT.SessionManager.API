@@ -34,9 +34,9 @@ public class ApiKeyAuthenticationHandler : AuthenticationHandler<ApiKeyAuthentic
             return Task.FromResult(AuthenticateResult.Fail("Invalid API key."));
         }
 
-        // If the API key is valid, create a ClaimsIdentity for the user.
-        var identity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, apiKey) }, ApiKeyAuthenticationOptions.DefaultScheme);
-        var principal = new ClaimsPrincipal(identity);
+        // If the API key is valid, create a ClaimsIdEntities for the user.
+        var idEntities = new ClaimsIdEntities(new[] { new Claim(ClaimTypes.Name, apiKey) }, ApiKeyAuthenticationOptions.DefaultScheme);
+        var principal = new ClaimsPrincipal(idEntities);
         var ticket = new AuthenticationTicket(principal, ApiKeyAuthenticationOptions.DefaultScheme);
 
         return Task.FromResult(AuthenticateResult.Success(ticket));

@@ -5,8 +5,8 @@ namespace ChatGPT.SessionManager.API.Services;
 
 public class SessionManagerService : ISessionManagerService
 {
-    private readonly string _filePath = "UserEntitys.json";
-    private List<UserEntity> entities = new();
+    private readonly string _filePath = "UserEntitiess.json";
+    private List<UserEntities> entities = new();
     private readonly ILogger<SessionManagerService> _logger;
 
     public SessionManagerService(ILogger<SessionManagerService> logger)
@@ -16,33 +16,33 @@ public class SessionManagerService : ISessionManagerService
         if (File.Exists(_filePath))
         {
             var json = File.ReadAllText(_filePath);
-            entities = JsonSerializer.Deserialize<List<UserEntity>>(json);
+            entities = JsonSerializer.Deserialize<List<UserEntities>>(json);
         }
         else
         {
-            entities = new List<UserEntity>();
+            entities = new List<UserEntities>();
         }
     }
 
-    public Task<IEnumerable<UserEntity>> GetAllUsers()
+    public Task<IEnumerable<UserEntities>> GetAllUsers()
     {
         _logger.LogInformation("Getting all users");
         return Task.FromResult(entities.AsEnumerable());
     }
 
-    public Task<UserEntity> GetUserById(string id)
+    public Task<UserEntities> GetUserById(string id)
     {
         _logger.LogInformation("Getting user by id");
         return Task.FromResult(entities.FirstOrDefault(u => u.Id == id));
     }
 
-    public Task<UserEntity> GetUserByName(string name)
+    public Task<UserEntities> GetUserByName(string name)
     {
         _logger.LogInformation("Getting user {name}", name);
         return Task.FromResult(entities.FirstOrDefault(u => u.Name == name));
     }
 
-    public async Task<UserEntity> AddUser(UserEntity newUser)
+    public async Task<UserEntities> AddUser(UserEntities newUser)
     {
         _logger.LogInformation("Adding user session {id}", newUser.Id);
         entities.Add(newUser);
@@ -50,7 +50,7 @@ public class SessionManagerService : ISessionManagerService
         return newUser;
     }
 
-    public async Task<bool> UpdateUser(UserEntity updatedUser)
+    public async Task<bool> UpdateUser(UserEntities updatedUser)
     {
         _logger.LogInformation("Updating user {id}", updatedUser.Id);
         var user = entities.FirstOrDefault(u => u.Id == updatedUser.Id);
@@ -84,7 +84,7 @@ public class SessionManagerService : ISessionManagerService
         if (string.IsNullOrEmpty(id))
             return false;
         
-        UserEntity? user = entities.FirstOrDefault(u => u.Id == id);
+        UserEntities? user = entities.FirstOrDefault(u => u.Id == id);
         
         if (user is null)
             return false;
@@ -110,7 +110,7 @@ public class SessionManagerService : ISessionManagerService
     public async Task<bool> UnlockUser(string id)
     {
         _logger.LogInformation("Unlocking user {id}", id);
-        UserEntity? user = entities.FirstOrDefault(u => u.Id == id);
+        UserEntities? user = entities.FirstOrDefault(u => u.Id == id);
         
         if (user is null)
             return false;
