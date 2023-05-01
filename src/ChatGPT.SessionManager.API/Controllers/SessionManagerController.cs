@@ -74,4 +74,28 @@ public class SessionManagerController : ControllerBase
         }
         return NoContent();
     }
+    
+    [HttpPut("users/{session}/lock")]
+    public async Task<IActionResult> LockUser(string session)
+    {
+        bool result = await _sessionManagerService.LockUser(session);
+        if (!result)
+        {
+            return Conflict("Already locked or user not found");
+        }
+        
+        return NoContent();
+    }
+    
+    [HttpPut("users/{session}/unlock")]
+    public async Task<IActionResult> UnlockUser(string session)
+    {
+        bool result = await _sessionManagerService.UnlockUser(session);
+        if (!result)
+        {
+            return Conflict("User not found");
+        }
+        
+        return NoContent();
+    }
 }
