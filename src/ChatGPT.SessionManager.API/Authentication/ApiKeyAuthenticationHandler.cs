@@ -35,7 +35,7 @@ public class ApiKeyAuthenticationHandler : AuthenticationHandler<ApiKeyAuthentic
         }
 
         // If the API key is valid, create a ClaimsIdEntities for the user.
-        var idEntities = new ClaimsIdEntities(new[] { new Claim(ClaimTypes.Name, apiKey) }, ApiKeyAuthenticationOptions.DefaultScheme);
+        var idEntities = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, apiKey) }, ApiKeyAuthenticationOptions.DefaultScheme);
         var principal = new ClaimsPrincipal(idEntities);
         var ticket = new AuthenticationTicket(principal, ApiKeyAuthenticationOptions.DefaultScheme);
 

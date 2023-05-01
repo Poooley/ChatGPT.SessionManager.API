@@ -5,7 +5,7 @@ namespace ChatGPT.SessionManager.API.Services;
 
 public class SessionManagerService : ISessionManagerService
 {
-    private readonly string _filePath = "UserEntitiess.json";
+    private readonly string _filePath = "UserEntities.json";
     private List<UserEntities> entities = new();
     private readonly ILogger<SessionManagerService> _logger;
 
