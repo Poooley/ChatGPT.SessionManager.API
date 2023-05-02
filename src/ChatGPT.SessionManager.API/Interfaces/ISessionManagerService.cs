@@ -12,4 +12,5 @@ public interface ISessionManagerService
     Task<bool> DeleteUser(string id);
     Task<bool> LockUser(string id);
     Task<bool> UnlockUser(string id);
+    Task<bool> IsLocked();
 }

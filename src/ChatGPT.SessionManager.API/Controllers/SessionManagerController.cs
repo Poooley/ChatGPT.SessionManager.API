@@ -98,4 +98,12 @@ public class SessionManagerController : ControllerBase
         
         return NoContent();
     }
+    
+    [HttpGet("users/isLocked")]
+    public async Task<IActionResult> IsLocked()
+    {
+        var result = await _sessionManagerService.IsLocked();
+        
+        return Ok(result);
+    }
 }

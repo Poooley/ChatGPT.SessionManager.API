@@ -121,6 +121,11 @@ public class SessionManagerService : ISessionManagerService
         return true;
     }
 
+    public Task<bool> IsLocked()
+    {
+        return Task.FromResult(entities.FirstOrDefault(e => e.IsLocked is true) != null);
+    }
+    
     private async Task SaveToFileAsync()
     {
         var json = JsonSerializer.Serialize(entities, new JsonSerializerOptions() { WriteIndented = true });
