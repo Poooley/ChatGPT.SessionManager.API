@@ -6,9 +6,15 @@ namespace ChatGPT.SessionManager.API.Services;
 public class SessionManagerService : ISessionManagerService
 {
     private readonly string _filePath = "UserEntities.json";
-    private List<UserEntities> entities = new();
+    private List<UserEntity> entities = new();
     private readonly ILogger<SessionManagerService> _logger;
 
+    public event EventHandler<UserEntity> UserAdded;
+    public event EventHandler<UserEntity> UserUpdated;
+    public event EventHandler<string> UserRemoved;
+    public event EventHandler<bool> LockStatusChanged;
+
+    
     public SessionManagerService(ILogger<SessionManagerService> logger)
     {
         _logger = logger;
@@ -16,41 +22,42 @@ public class SessionManagerService : ISessionManagerService
         if (File.Exists(_filePath))
         {
             var json = File.ReadAllText(_filePath);
-            entities = JsonSerializer.Deserialize<List<UserEntities>>(json);
+            entities = JsonSerializer.Deserialize<List<UserEntity>>(json);
         }
         else
         {
-            entities = new List<UserEntities>();
+            entities = new List<UserEntity>();
         }
     }
 
-    public Task<IEnumerable<UserEntities>> GetAllUsers()
+    public Task<IEnumerable<UserEntity>> GetAllUsers()
     {
         _logger.LogInformation("Getting all users");
         return Task.FromResult(entities.AsEnumerable());
     }
 
-    public Task<UserEntities> GetUserById(string id)
+    public Task<UserEntity> GetUserById(string id)
     {
         _logger.LogInformation("Getting user by id");
         return Task.FromResult(entities.FirstOrDefault(u => u.Id == id));
     }
 
-    public Task<UserEntities> GetUserByName(string name)
+    public Task<UserEntity> GetUserByName(string name)
     {
         _logger.LogInformation("Getting user {name}", name);
         return Task.FromResult(entities.FirstOrDefault(u => u.Name == name));
     }
 
-    public async Task<UserEntities> AddUser(UserEntities newUser)
+    public async Task<UserEntity> AddUser(UserEntity newUser)
     {
         _logger.LogInformation("Adding user session {id}", newUser.Id);
         entities.Add(newUser);
         await SaveToFileAsync();
+        UserAdded?.Invoke(this, newUser);
         return newUser;
     }
 
-    public async Task<bool> UpdateUser(UserEntities updatedUser)
+    public async Task<bool> UpdateUser(UserEntity updatedUser)
     {
         _logger.LogInformation("Updating user {id}", updatedUser.Id);
         var user = entities.FirstOrDefault(u => u.Id == updatedUser.Id);
@@ -61,6 +68,7 @@ public class SessionManagerService : ISessionManagerService
 
         user.Name = updatedUser.Name;
         await SaveToFileAsync();
+        UserUpdated?.Invoke(this, updatedUser);
         return true;
     }
 
@@ -84,7 +92,7 @@ public class SessionManagerService : ISessionManagerService
         if (string.IsNullOrEmpty(id))
             return false;
         
-        UserEntities? user = entities.FirstOrDefault(u => u.Id == id);
+        UserEntity? user = entities.FirstOrDefault(u => u.Id == id);
         
         if (user is null)
             return false;
@@ -95,7 +103,7 @@ public class SessionManagerService : ISessionManagerService
         user.IsLocked = true;
 
         // if something goes wrong, a task should unlock the user after 30 seconds
-        _ = Task.Delay(15000).ContinueWith(async _ =>
+        _ = Task.Delay(25000).ContinueWith(async _ =>
         {
             if (user.IsLocked == true)
             {
@@ -104,13 +112,15 @@ public class SessionManagerService : ISessionManagerService
             }
         });
         await SaveToFileAsync();
+        UserRemoved?.Invoke(this, id);
+        LockStatusChanged?.Invoke(this, true);
         return true;
     }
 
     public async Task<bool> UnlockUser(string id)
     {
         _logger.LogInformation("Unlocking user {id}", id);
-        UserEntities? user = entities.FirstOrDefault(u => u.Id == id);
+        UserEntity? user = entities.FirstOrDefault(u => u.Id == id);
         
         if (user is null)
             return false;
@@ -118,6 +128,7 @@ public class SessionManagerService : ISessionManagerService
         user.IsLocked = false;
 
         await SaveToFileAsync();
+        LockStatusChanged?.Invoke(this, false);
         return true;
     }
 

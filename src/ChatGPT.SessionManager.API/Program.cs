@@ -14,9 +14,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSingleton<ISessionManagerService, SessionManagerService>();
 builder.Configuration.AddUserSecrets<Program>();
 
-
-
-
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
@@ -63,6 +60,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseWebSockets();
+app.UseMiddleware<WebSocketMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();

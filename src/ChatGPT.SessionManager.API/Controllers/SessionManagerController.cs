@@ -19,14 +19,14 @@ public class SessionManagerController : ControllerBase
     }
 
     [HttpPost("users")]
-    public async Task<IActionResult> AddUser([FromBody] UserEntities newUser)
+    public async Task<IActionResult> AddUser([FromBody] UserEntity newUser)
     {
         var createdUser = await _sessionManagerService.AddUser(newUser);
         return CreatedAtAction(nameof(AddUser), new { id = createdUser.Id }, createdUser);
     }
 
     [HttpGet("users")]
-    public async Task<IEnumerable<UserEntities>> GetAllUsers()
+    public async Task<IEnumerable<UserEntity>> GetAllUsers()
     {
         return await _sessionManagerService.GetAllUsers();
     }
@@ -54,7 +54,7 @@ public class SessionManagerController : ControllerBase
     }
 
     [HttpPut("users/")]
-    public async Task<IActionResult> UpdateUser([FromBody] UserEntities updatedUser)
+    public async Task<IActionResult> UpdateUser([FromBody] UserEntity updatedUser)
     {
         var result = await _sessionManagerService.UpdateUser(updatedUser);
         if (!result)
