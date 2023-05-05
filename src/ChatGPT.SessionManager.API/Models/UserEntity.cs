@@ -4,5 +4,5 @@ public class UserEntity
 {
     public required string Id { get; set; }
     public string Name { get; set; }
-    public bool? IsLocked { get; set; } = null;
+    public bool IsLocked { get; set; }
 }

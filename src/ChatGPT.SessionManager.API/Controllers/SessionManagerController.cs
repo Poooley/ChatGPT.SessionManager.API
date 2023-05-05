@@ -64,7 +64,7 @@ public class SessionManagerController : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete("users/{id:int}")]
+    [HttpDelete("users/{id}")]
     public async Task<IActionResult> DeleteUser(string id)
     {
         var result = await _sessionManagerService.DeleteUser(id);

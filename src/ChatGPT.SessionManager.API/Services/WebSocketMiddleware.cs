@@ -17,7 +17,7 @@ public class WebSocketMiddleware
     {
         _next = next;
         _sessionManagerService = sessionManagerService;
-        _jsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+        _jsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = null };
     }
 
     public async Task InvokeAsync(HttpContext context)
@@ -46,9 +46,7 @@ public class WebSocketMiddleware
         _sockets.TryAdd(socketId, webSocket);
 
         // Subscribe to events in the SessionManagerService
-        _sessionManagerService.UserAdded += SendUserAddedNotification;
-        _sessionManagerService.UserUpdated += SendUserUpdatedNotification;
-        _sessionManagerService.UserRemoved += SendUserRemovedNotification;
+        _sessionManagerService.UserChanged += SendUserChangedNotification;
         _sessionManagerService.LockStatusChanged += SendLockStatusChangedNotification;
 
         WebSocketReceiveResult result;
@@ -63,38 +61,23 @@ public class WebSocketMiddleware
 
         // Clean up when the WebSocket is closed
         _sockets.TryRemove(socketId, out _);
-        _sessionManagerService.UserAdded -= SendUserAddedNotification;
-        _sessionManagerService.UserUpdated -= SendUserUpdatedNotification;
-        _sessionManagerService.UserRemoved -= SendUserRemovedNotification;
+        _sessionManagerService.UserChanged -= SendUserChangedNotification;
         _sessionManagerService.LockStatusChanged -= SendLockStatusChangedNotification;
         await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
     }
-
-
-    private async void SendUserAddedNotification(object sender, UserEntity user)
+    
+    private async void SendUserChangedNotification(object sender, (UserEntity user, UserChangedAction action) e)
     {
-        var message = JsonSerializer.Serialize(new { type = "userAdded", data = user }, _jsonOptions);
+        var message = JsonSerializer.Serialize(new { type = "userChanged", e.user, e.action}, _jsonOptions);
         await SendWebSocketMessageAsync(message);
     }
-
-    private async void SendUserUpdatedNotification(object sender, UserEntity user)
-    {
-        var message = JsonSerializer.Serialize(new { type = "userUpdated", data = user }, _jsonOptions);
-        await SendWebSocketMessageAsync(message);
-    }
-
-    private async void SendUserRemovedNotification(object sender, string userId)
-    {
-        var message = JsonSerializer.Serialize(new { type = "userRemoved", data = userId }, _jsonOptions);
-        await SendWebSocketMessageAsync(message);
-    }
-
+    
     private async void SendLockStatusChangedNotification(object sender, bool lockStatus)
     {
         var message = JsonSerializer.Serialize(new { type = "lockStatusChanged", lockStatus }, _jsonOptions);
         await SendWebSocketMessageAsync(message);
     }
-
+    
     private async Task SendWebSocketMessageAsync(string message)
     {
         var messageBytes = Encoding.UTF8.GetBytes(message);

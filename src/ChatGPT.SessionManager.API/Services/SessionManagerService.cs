@@ -9,12 +9,9 @@ public class SessionManagerService : ISessionManagerService
     private List<UserEntity> entities = new();
     private readonly ILogger<SessionManagerService> _logger;
 
-    public event EventHandler<UserEntity> UserAdded;
-    public event EventHandler<UserEntity> UserUpdated;
-    public event EventHandler<string> UserRemoved;
+    public event EventHandler<(UserEntity, UserChangedAction)> UserChanged;
     public event EventHandler<bool> LockStatusChanged;
 
-    
     public SessionManagerService(ILogger<SessionManagerService> logger)
     {
         _logger = logger;
@@ -53,7 +50,7 @@ public class SessionManagerService : ISessionManagerService
         _logger.LogInformation("Adding user session {id}", newUser.Id);
         entities.Add(newUser);
         await SaveToFileAsync();
-        UserAdded?.Invoke(this, newUser);
+        UserChanged?.Invoke(this, (newUser, UserChangedAction.Added));
         return newUser;
     }
 
@@ -68,7 +65,7 @@ public class SessionManagerService : ISessionManagerService
 
         user.Name = updatedUser.Name;
         await SaveToFileAsync();
-        UserUpdated?.Invoke(this, updatedUser);
+        UserChanged?.Invoke(this, (updatedUser, UserChangedAction.Updated));
         return true;
     }
 
@@ -83,6 +80,7 @@ public class SessionManagerService : ISessionManagerService
 
         entities.Remove(user);
         await SaveToFileAsync();
+        UserChanged?.Invoke(this, (user, UserChangedAction.Removed));
         return true;
     }
 
@@ -112,8 +110,8 @@ public class SessionManagerService : ISessionManagerService
             }
         });
         await SaveToFileAsync();
-        UserRemoved?.Invoke(this, id);
         LockStatusChanged?.Invoke(this, true);
+        UserChanged?.Invoke(this, (user, UserChangedAction.Updated));
         return true;
     }
 
@@ -129,6 +127,7 @@ public class SessionManagerService : ISessionManagerService
 
         await SaveToFileAsync();
         LockStatusChanged?.Invoke(this, false);
+        UserChanged?.Invoke(this, (user, UserChangedAction.Updated));
         return true;
     }
 
