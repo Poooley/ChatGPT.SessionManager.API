@@ -3,6 +3,7 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
 using ChatGPT.SessionManager.API.Models;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace ChatGPT.SessionManager.API.Services;
 
@@ -12,27 +13,30 @@ public class WebSocketMiddleware
     private readonly ISessionManagerService _sessionManagerService;
     private readonly JsonSerializerOptions _jsonOptions;
     private static readonly ConcurrentDictionary<Guid, WebSocket> _sockets = new();
+    private readonly IMemoryCache _cache;
 
-    public WebSocketMiddleware(RequestDelegate next, ISessionManagerService sessionManagerService)
+    public WebSocketMiddleware(RequestDelegate next, 
+        ISessionManagerService sessionManagerService,
+        IMemoryCache cache)
     {
         _next = next;
         _sessionManagerService = sessionManagerService;
+        _cache = cache;
         _jsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = null };
     }
 
     public async Task InvokeAsync(HttpContext context)
     {
-        if (context.Request.Path.StartsWithSegments("/api/session-manager/ws"))
+        if (context.WebSockets.IsWebSocketRequest)
         {
-            if (context.WebSockets.IsWebSocketRequest)
+            if (!IsValidToken(context.Request.Query))
             {
-                using WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync();
-                await ProcessWebSocketRequests(context, webSocket);
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                return;
             }
-            else
-            {
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
-            }
+
+            using WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync();
+            await ProcessWebSocketRequests(context, webSocket);
         }
         else
         {
@@ -64,6 +68,23 @@ public class WebSocketMiddleware
         _sessionManagerService.UserChanged -= SendUserChangedNotification;
         _sessionManagerService.LockStatusChanged -= SendLockStatusChangedNotification;
         await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
+    }
+    
+    private bool IsValidToken(IQueryCollection query)
+    {
+        if (!query.TryGetValue("token", out var tokenValues))
+        {
+            return false;
+        }
+
+        var token = tokenValues.ToString();
+        if (_cache.TryGetValue(token, out _))
+        {
+            _cache.Remove(token);
+            return true;
+        }
+
+        return false;
     }
     
     private async void SendUserChangedNotification(object sender, (UserEntity user, UserChangedAction action) e)

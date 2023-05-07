@@ -1,6 +1,7 @@
 using ChatGPT.SessionManager.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace ChatGPT.SessionManager.API.Controllers;
 
@@ -11,11 +12,23 @@ public class SessionManagerController : ControllerBase
 {
     private readonly ILogger<SessionManagerController> _logger;
     private readonly ISessionManagerService _sessionManagerService;
-
-    public SessionManagerController(ILogger<SessionManagerController> logger, ISessionManagerService sessionManagerService)
+    private readonly IMemoryCache _cache;
+    
+    public SessionManagerController(ILogger<SessionManagerController> logger, 
+        ISessionManagerService sessionManagerService, 
+        IMemoryCache cache)
     {
         _logger = logger;
+        _cache = cache;
         _sessionManagerService = sessionManagerService;
+    }
+    
+    [HttpGet("generate-token")]
+    public IActionResult GenerateToken()
+    {
+        var token = Guid.NewGuid().ToString();
+        _cache.Set(token, true, TimeSpan.FromMinutes(5));
+        return Ok(new { token });
     }
 
     [HttpPost("users")]
