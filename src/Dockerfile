@@ -11,7 +11,7 @@ WORKDIR "src/ChatGPT.SessionManager.API"
 RUN dotnet build "ChatGPT.SessionManager.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "ChatGPT.SessionManager.API" -c Release -o /app/publish
+RUN dotnet publish "ChatGPT.SessionManager.API.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
