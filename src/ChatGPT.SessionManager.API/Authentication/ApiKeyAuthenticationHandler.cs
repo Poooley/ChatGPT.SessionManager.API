@@ -44,7 +44,7 @@ public class ApiKeyAuthenticationHandler : AuthenticationHandler<ApiKeyAuthentic
 
     private bool IsValidApiKey(string apiKey)
     {
-        // Replace this with your actual API key validation logic.
-        return apiKey == _config["XApiKey"];
+        // TODO: HARD CODED API KEY (ALTERNATIVE !!!)
+        return apiKey == "64CCB476-6B41-4397-9437-7EA60E2F7E9D";
     }
 }
