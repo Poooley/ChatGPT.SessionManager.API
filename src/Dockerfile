@@ -4,16 +4,16 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR "src"
-COPY ["src/asp.net-TestApplication/asp.net-TestApplication.csproj", "asp.net-TestApplication/"]
-RUN dotnet restore "asp.net-TestApplication/asp.net-TestApplication.csproj"
+COPY ["src/ChatGPT.SessionManager.API/ChatGPT.SessionManager.API.csproj", "ChatGPT.SessionManager.API/"]
+RUN dotnet restore "ChatGPT.SessionManager.API/ChatGPT.SessionManager.API.csproj"
 COPY . .
-WORKDIR "src/asp.net-TestApplication"
-RUN dotnet build "asp.net-TestApplication.csproj" -c Release -o /app/build
+WORKDIR "src/ChatGPT.SessionManager.API"
+RUN dotnet build "ChatGPT.SessionManager.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "asp.net-TestApplication.csproj" -c Release -o /app/publish
+RUN dotnet publish "ChatGPT.SessionManager.API" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "asp.net-TestApplication.dll"]
+ENTRYPOINT ["dotnet", "ChatGPT.SessionManager.API.dll"]
