@@ -14,6 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSingleton<ISessionManagerService, SessionManagerService>();
 builder.Services.AddMemoryCache();
 builder.Configuration.AddUserSecrets<Program>();
+builder.Services.AddHealthChecks();
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -44,7 +45,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-builder.Services.AddHealthChecks();
+
 
 builder.Services.AddAuthentication(opt =>
 {
@@ -54,15 +55,13 @@ builder.Services.AddAuthentication(opt =>
 .AddScheme<ApiKeyAuthenticationOptions, ApiKeyAuthenticationHandler>(ApiKeyAuthenticationOptions.DefaultScheme, options => { });
 
 var app = builder.Build();
-
+app.MapHealthChecks("/health");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.MapHealthChecks("/health");
 
 app.UseWebSockets();
 app.UseMiddleware<WebSocketMiddleware>();
