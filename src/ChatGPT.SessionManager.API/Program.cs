@@ -44,6 +44,8 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+builder.Services.AddHealthChecks();
+
 builder.Services.AddAuthentication(opt =>
 {
     opt.DefaultAuthenticateScheme = ApiKeyAuthenticationOptions.DefaultScheme;
@@ -60,7 +62,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.MapHealthChecks("/health");
 
 app.UseWebSockets();
 app.UseMiddleware<WebSocketMiddleware>();
