@@ -1,0 +1,27 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: Poooley/K8s.Pipelines/Build.NET@main
+      with:
+        PROJECT_PATH: ./src/ChatGPT.SessionManager.API/
+        SERVICE_NAME: "api-session-manager"
+        DOCKER_TOKEN: ${{ secrets.ACTION_TOKEN }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+    - uses: Poooley/K8s.Pipelines/Deploy.NET@main
+      with:
+        SERVICE_NAME: "api-session-manager"
+        INGRESS_PATH: "api/session-manager"
+        DOCKER_TOKEN: ${{ secrets.ACTION_TOKEN }}
+        KUBECONFIG: ${{ secrets.KUBECONFIG }}
