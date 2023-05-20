@@ -90,7 +90,7 @@ public class SessionManagerService : ISessionManagerService
         if (string.IsNullOrEmpty(id))
             return false;
         
-        UserEntity? user = entities.FirstOrDefault(u => u.Id == id);
+        UserEntity user = entities.FirstOrDefault(u => u.Id == id);
         
         if (user is null)
             return false;
