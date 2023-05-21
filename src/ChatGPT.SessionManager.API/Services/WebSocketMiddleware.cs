@@ -11,16 +11,19 @@ public class WebSocketMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly ISessionManagerService _sessionManagerService;
+    private readonly ILogger<WebSocketMiddleware> _logger;
     private readonly JsonSerializerOptions _jsonOptions;
     private static readonly ConcurrentDictionary<Guid, WebSocket> _sockets = new();
     private readonly IMemoryCache _cache;
 
     public WebSocketMiddleware(RequestDelegate next, 
         ISessionManagerService sessionManagerService,
+        ILogger<WebSocketMiddleware> logger,
         IMemoryCache cache)
     {
         _next = next;
         _sessionManagerService = sessionManagerService;
+        _logger = logger;
         _cache = cache;
         _jsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = null };
     }
@@ -29,17 +32,21 @@ public class WebSocketMiddleware
     {
         if (context.WebSockets.IsWebSocketRequest)
         {
+            _logger.LogInformation("WebSocket connection established");
             if (!IsValidToken(context.Request.Query))
             {
+                _logger.LogWarning("Invalid token");
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                 return;
             }
-
+            
+            _logger.LogInformation("Token is valid");
             using WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync();
             await ProcessWebSocketRequests(context, webSocket);
         }
         else
         {
+            _logger.LogDebug("Request is not a WebSocket request");
             await _next(context);
         }
     }
@@ -62,7 +69,7 @@ public class WebSocketMiddleware
             // You can process incoming WebSocket messages here if needed
 
         } while (!result.CloseStatus.HasValue);
-
+        
         // Clean up when the WebSocket is closed
         _sockets.TryRemove(socketId, out _);
         _sessionManagerService.UserChanged -= SendUserChangedNotification;
