@@ -1,0 +1,9 @@
+ingress:
+  path: /api/session-manager
+
+env:
+  - name: SESSION_MANAGER_SECRET
+    valueFrom:
+      secretKeyRef:
+        name: X-SESSION-MANAGER-API-KEY
+        key: secret
