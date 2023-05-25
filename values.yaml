@@ -5,5 +5,5 @@ env:
   - name: SESSION_MANAGER_SECRET
     valueFrom:
       secretKeyRef:
-        name: X-SESSION-MANAGER-API-KEY
+        name: x-session-manager-api-key
         key: secret
