@@ -44,7 +44,6 @@ public class ApiKeyAuthenticationHandler : AuthenticationHandler<ApiKeyAuthentic
 
     private bool IsValidApiKey(string apiKey)
     {
-        // TODO: HARD CODED API KEY (ALTERNATIVE !!!)
-        return apiKey == "64CCB476-6B41-4397-9437-7EA60E2F7E9D";
+        return apiKey == config["SESSION_MANAGER_SECRET"];
     }
 }
