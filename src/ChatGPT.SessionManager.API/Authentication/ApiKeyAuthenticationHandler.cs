@@ -44,6 +44,6 @@ public class ApiKeyAuthenticationHandler : AuthenticationHandler<ApiKeyAuthentic
 
     private bool IsValidApiKey(string apiKey)
     {
-        return apiKey == config["SESSION_MANAGER_SECRET"];
+        return apiKey == _config["SESSION_MANAGER_SECRET"];
     }
 }
