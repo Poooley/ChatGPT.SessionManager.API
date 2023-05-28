@@ -5,11 +5,10 @@
     <projectFile profileName="https">ChatGPT.SessionManager.API/ChatGPT.SessionManager.API.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="756482cd-9671-46c1-a781-0926deacf736" name="Changes" comment="">
+    <list default="true" id="756482cd-9671-46c1-a781-0926deacf736" name="Changes" comment="🏗️ use /app/data">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ChatGPT.SessionManager.API/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChatGPT.SessionManager.API/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatGPT.SessionManager.API.sln" beforeDir="false" afterPath="$PROJECT_DIR$/ChatGPT.SessionManager.API.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../values.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,27 +65,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "XThreadsFramesViewSplitterKey": "0.50076336",
-    "com.github.patou.gitmoji.display-icon": "emoji",
-    "com.github.patou.gitmoji.text-after-unicode": " ",
-    "com.github.patou.gitmoji.use-unicode": "true",
-    "last_opened_file_path": "/home/paul/repos/ChatGPT.SessionManager.API/values.yaml",
-    "settings.editor.selected.configurable": "com.github.patou.gitmoji.config",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.50076336&quot;,
+    &quot;com.github.patou.gitmoji.display-icon&quot;: &quot;emoji&quot;,
+    &quot;com.github.patou.gitmoji.text-after-unicode&quot;: &quot; &quot;,
+    &quot;com.github.patou.gitmoji.use-unicode&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/paul/repos/ChatGPT.SessionManager.API/values.yaml&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.github.patou.gitmoji.config&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "/home/paul/.config/JetBrains/Rider2022.3/resharper-host/DecompilerCache",
-      "/home/paul/.config/JetBrains/Rider2022.3/resharper-host/SourcesCache",
-      "/home/paul/.local/share/Symbols/src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;/home/paul/.config/JetBrains/Rider2022.3/resharper-host/DecompilerCache&quot;,
+      &quot;/home/paul/.config/JetBrains/Rider2022.3/resharper-host/SourcesCache&quot;,
+      &quot;/home/paul/.local/share/Symbols/src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.ChatGPT.SessionManager.API: http">
     <configuration name="ChatGPT.SessionManager.API: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/ChatGPT.SessionManager.API/ChatGPT.SessionManager.API.csproj" />
@@ -144,6 +143,7 @@
       <workItem from="1684589540717" duration="3274000" />
       <workItem from="1684593164228" duration="3569000" />
       <workItem from="1684683512876" duration="1194000" />
+      <workItem from="1685312925078" duration="1208000" />
     </task>
     <task id="LOCAL-00001" summary="🏗️ add service and users can be added/deleted/...">
       <created>1682711789836</created>
@@ -271,7 +271,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684684632316</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="🏗️ use /app/data">
+      <created>1685302327112</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1685302327112</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -299,6 +306,26 @@
     <MESSAGE value="⚗️ hard coded api key (removed in future)" />
     <MESSAGE value="change health check order" />
     <MESSAGE value=" add logging to WebSocketMiddleware.cs" />
-    <option name="LAST_COMMIT_MESSAGE" value=" add logging to WebSocketMiddleware.cs" />
+    <MESSAGE value="️ use /app/data" />
+    <option name="LAST_COMMIT_MESSAGE" value="️ use /app/data" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ChatGPT.SessionManager.API/Services/SessionManagerService.cs</url>
+          <line>21</line>
+          <properties documentPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" initialLine="21" containingFunctionPresentation="constructor 'SessionManagerService'">
+            <startOffsets>
+              <option value="687" />
+            </startOffsets>
+            <endOffsets>
+              <option value="688" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

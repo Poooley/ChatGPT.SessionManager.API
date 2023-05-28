@@ -14,6 +14,14 @@ public class SessionManagerService : ISessionManagerService
     public SessionManagerService(ILogger<SessionManagerService> logger)
     {
         _logger = logger;
+
+        var filePath = Path.Combine("/app/data", _filePath);
+        var fileExists = File.Exists(filePath);
+        
+        if (!fileExists)
+        {
+            File.Create(filePath).Dispose();
+        }
     }
 
     public async Task<IEnumerable<UserEntity>> GetAllUsers()
@@ -106,7 +114,7 @@ public class SessionManagerService : ISessionManagerService
         user.IsLocked = true;
 
         // if something goes wrong, a task should unlock the user after 30 seconds
-        _ = Task.Delay(25000).ContinueWith(async _ =>
+        _ = Task.Delay(45000).ContinueWith(async _ =>
         {
             var entitiesUpd = await GetEntitiesFromFile();
             var userUpd = entitiesUpd.FirstOrDefault(u => u.Id == id);
@@ -130,7 +138,7 @@ public class SessionManagerService : ISessionManagerService
         
         var entities = await GetEntitiesFromFile();
 
-        UserEntity? user = entities.FirstOrDefault(u => u.Id == id);
+        UserEntity user = entities.FirstOrDefault(u => u.Id == id);
         
         if (user is null)
             return false;
