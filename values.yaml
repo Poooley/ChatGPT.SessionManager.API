@@ -10,3 +10,6 @@ env:
       secretKeyRef:
         name: x-session-manager-api-key
         key: secret
+
+autoscaling:
+  minReplicas: 2
