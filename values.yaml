@@ -1,5 +1,8 @@
 ingress:
   path: /api/session-manager
+  
+persistence:
+  enabled: true
 
 env:
   - name: SESSION_MANAGER_SECRET

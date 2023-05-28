@@ -6,7 +6,6 @@ namespace ChatGPT.SessionManager.API.Services;
 public class SessionManagerService : ISessionManagerService
 {
     private readonly string _filePath = "UserEntities.json";
-    private List<UserEntity> entities = new();
     private readonly ILogger<SessionManagerService> _logger;
 
     public event EventHandler<(UserEntity, UserChangedAction)> UserChanged;
@@ -15,41 +14,39 @@ public class SessionManagerService : ISessionManagerService
     public SessionManagerService(ILogger<SessionManagerService> logger)
     {
         _logger = logger;
-        
-        if (File.Exists(_filePath))
-        {
-            var json = File.ReadAllText(_filePath);
-            entities = JsonSerializer.Deserialize<List<UserEntity>>(json);
-        }
-        else
-        {
-            entities = new List<UserEntity>();
-        }
     }
 
-    public Task<IEnumerable<UserEntity>> GetAllUsers()
+    public async Task<IEnumerable<UserEntity>> GetAllUsers()
     {
         _logger.LogInformation("Getting all users");
-        return Task.FromResult(entities.AsEnumerable());
+        return await GetEntitiesFromFile();
     }
 
-    public Task<UserEntity> GetUserById(string id)
+    public async Task<UserEntity> GetUserById(string id)
     {
         _logger.LogInformation("Getting user by id");
-        return Task.FromResult(entities.FirstOrDefault(u => u.Id == id));
+        
+        var entities = await GetEntitiesFromFile();
+        return entities.FirstOrDefault(u => u.Id == id);
+
     }
 
-    public Task<UserEntity> GetUserByName(string name)
+    public async Task<UserEntity> GetUserByName(string name)
     {
         _logger.LogInformation("Getting user {name}", name);
-        return Task.FromResult(entities.FirstOrDefault(u => u.Name == name));
+        
+        var entities = await GetEntitiesFromFile();
+        return entities.FirstOrDefault(u => u.Name == name);
     }
 
     public async Task<UserEntity> AddUser(UserEntity newUser)
     {
         _logger.LogInformation("Adding user session {id}", newUser.Id);
+        
+        var entities = await GetEntitiesFromFile();
+        
         entities.Add(newUser);
-        await SaveToFileAsync();
+        await SaveToFileAsync(entities);
         UserChanged?.Invoke(this, (newUser, UserChangedAction.Added));
         return newUser;
     }
@@ -57,6 +54,9 @@ public class SessionManagerService : ISessionManagerService
     public async Task<bool> UpdateUser(UserEntity updatedUser)
     {
         _logger.LogInformation("Updating user {id}", updatedUser.Id);
+        
+        var entities = await GetEntitiesFromFile();
+
         var user = entities.FirstOrDefault(u => u.Id == updatedUser.Id);
         if (user == null)
         {
@@ -64,7 +64,7 @@ public class SessionManagerService : ISessionManagerService
         }
 
         user.Name = updatedUser.Name;
-        await SaveToFileAsync();
+        await SaveToFileAsync(entities);
         UserChanged?.Invoke(this, (updatedUser, UserChangedAction.Updated));
         return true;
     }
@@ -72,6 +72,9 @@ public class SessionManagerService : ISessionManagerService
     public async Task<bool> DeleteUser(string id)
     {
         _logger.LogInformation("Deleting user {id}", id);
+        
+        var entities = await GetEntitiesFromFile();
+
         var user = entities.FirstOrDefault(u => u.Id == id);
         if (user == null)
         {
@@ -79,7 +82,7 @@ public class SessionManagerService : ISessionManagerService
         }
 
         entities.Remove(user);
-        await SaveToFileAsync();
+        await SaveToFileAsync(entities);
         UserChanged?.Invoke(this, (user, UserChangedAction.Removed));
         return true;
     }
@@ -90,7 +93,9 @@ public class SessionManagerService : ISessionManagerService
         if (string.IsNullOrEmpty(id))
             return false;
         
-        UserEntity user = entities.FirstOrDefault(u => u.Id == id);
+        var entities = await GetEntitiesFromFile();
+
+        var user = entities.FirstOrDefault(u => u.Id == id);
         
         if (user is null)
             return false;
@@ -103,13 +108,17 @@ public class SessionManagerService : ISessionManagerService
         // if something goes wrong, a task should unlock the user after 30 seconds
         _ = Task.Delay(25000).ContinueWith(async _ =>
         {
-            if (user.IsLocked == true)
+            var entitiesUpd = await GetEntitiesFromFile();
+            var userUpd = entitiesUpd.FirstOrDefault(u => u.Id == id);
+
+            if (userUpd?.IsLocked == true)
             {
                 _logger.LogWarning("User was locked for too long, unlocking {id}", id);
                 await UnlockUser(id);
             }
         });
-        await SaveToFileAsync();
+        
+        await SaveToFileAsync(entities);
         LockStatusChanged?.Invoke(this, true);
         UserChanged?.Invoke(this, (user, UserChangedAction.Updated));
         return true;
@@ -118,6 +127,9 @@ public class SessionManagerService : ISessionManagerService
     public async Task<bool> UnlockUser(string id)
     {
         _logger.LogInformation("Unlocking user {id}", id);
+        
+        var entities = await GetEntitiesFromFile();
+
         UserEntity? user = entities.FirstOrDefault(u => u.Id == id);
         
         if (user is null)
@@ -125,20 +137,29 @@ public class SessionManagerService : ISessionManagerService
         
         user.IsLocked = false;
 
-        await SaveToFileAsync();
+        await SaveToFileAsync(entities);
         LockStatusChanged?.Invoke(this, false);
         UserChanged?.Invoke(this, (user, UserChangedAction.Updated));
         return true;
     }
 
-    public Task<bool> IsLocked()
+    public async Task<bool> IsLocked()
     {
-        return Task.FromResult(entities.FirstOrDefault(e => e.IsLocked is true) != null);
+        var entities = await GetEntitiesFromFile();
+
+        return entities.FirstOrDefault(e => e.IsLocked is true) != null;
     }
     
-    private async Task SaveToFileAsync()
+    private async Task SaveToFileAsync(List<UserEntity> entities)
     {
         var json = JsonSerializer.Serialize(entities, new JsonSerializerOptions() { WriteIndented = true });
-        await File.WriteAllTextAsync(_filePath, json);
+        var fullFilePath = Path.Combine("/app/data", _filePath);
+        await File.WriteAllTextAsync(fullFilePath, json);
+    }
+
+    private async Task<List<UserEntity>> GetEntitiesFromFile()
+    {
+        var fullFilePath = Path.Combine("/app/data", _filePath);
+        return JsonSerializer.Deserialize<List<UserEntity>>(await File.ReadAllBytesAsync(fullFilePath));
     }
 }
