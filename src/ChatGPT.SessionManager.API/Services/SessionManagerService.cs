@@ -15,12 +15,19 @@ public class SessionManagerService : ISessionManagerService
     {
         _logger = logger;
 
-        var filePath = Path.Combine("/app/data", _filePath);
-        var fileExists = File.Exists(filePath);
-        
-        if (!fileExists)
+        try
         {
-            File.Create(filePath).Dispose();
+            var filePath = Path.Combine("/app/data", _filePath);
+            var fileExists = File.Exists(filePath);
+        
+            if (!fileExists)
+            {
+                File.Create(filePath).Dispose();
+            }
+        }
+        catch (Exception e)
+        {
+            logger.LogError("Something went wrong creating the user file", e);
         }
     }
 
