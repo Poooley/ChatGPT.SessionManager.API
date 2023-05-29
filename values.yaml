@@ -12,4 +12,4 @@ env:
         key: secret
 
 autoscaling:
-  minReplicas: 2
+  minReplicas: 1
