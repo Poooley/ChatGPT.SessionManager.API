@@ -5,7 +5,7 @@ namespace ChatGPT.SessionManager.API.Services;
 
 public class SessionManagerService : ISessionManagerService
 {
-    private readonly string _directoryPath = "/home/paul/users";
+    private readonly string _directoryPath = "/app/data/users";
     private readonly ILogger<SessionManagerService> _logger;
 
     public event EventHandler<(UserEntity, UserChangedAction)> UserChanged;
