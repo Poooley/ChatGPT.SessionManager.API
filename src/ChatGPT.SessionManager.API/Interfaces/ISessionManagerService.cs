@@ -4,12 +4,11 @@ namespace ChatGPT.SessionManager.API;
 
 public interface ISessionManagerService
 {
-    public event EventHandler<(UserEntity, UserChangedAction)> UserChanged;
-    public event EventHandler<bool> LockStatusChanged;
-    
+    event EventHandler<(UserEntity, UserChangedAction)> UserChanged;
+    event EventHandler<bool> LockStatusChanged;
+
     Task<IEnumerable<UserEntity>> GetAllUsers();
     Task<UserEntity> GetUserById(string id);
-    Task<UserEntity> GetUserByName(string name);
     Task<UserEntity> AddUser(UserEntity newUser);
     Task<bool> UpdateUser(UserEntity updatedUser);
     Task<bool> DeleteUser(string id);

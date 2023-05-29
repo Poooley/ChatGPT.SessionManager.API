@@ -5,7 +5,7 @@ namespace ChatGPT.SessionManager.API.Services;
 
 public class SessionManagerService : ISessionManagerService
 {
-    private readonly string _filePath = "UserEntities.json";
+    private readonly string _directoryPath = "/home/paul/users";
     private readonly ILogger<SessionManagerService> _logger;
 
     public event EventHandler<(UserEntity, UserChangedAction)> UserChanged;
@@ -15,166 +15,193 @@ public class SessionManagerService : ISessionManagerService
     {
         _logger = logger;
 
-        try
+        if (!Directory.Exists(_directoryPath))
         {
-            var filePath = Path.Combine("/app/data", _filePath);
-            var fileExists = File.Exists(filePath);
-        
-            if (!fileExists)
-            {
-                File.Create(filePath).Dispose();
-            }
-        }
-        catch (Exception e)
-        {
-            //logger.LogError("Something went wrong creating the user file", e);
+            Directory.CreateDirectory(_directoryPath);
         }
     }
 
     public async Task<IEnumerable<UserEntity>> GetAllUsers()
     {
         _logger.LogInformation("Getting all users");
-        return await GetEntitiesFromFile();
+        var users = new List<UserEntity>();
+        foreach (var file in Directory.EnumerateFiles(_directoryPath, "*.json"))
+        {
+            var user = JsonSerializer.Deserialize<UserEntity>(await File.ReadAllBytesAsync(file));
+            if (user != null)
+            {
+                users.Add(user);
+            }
+        }
+        
+        return users;
     }
 
     public async Task<UserEntity> GetUserById(string id)
     {
-        _logger.LogInformation("Getting user by id");
-        
-        var entities = await GetEntitiesFromFile();
-        return entities.FirstOrDefault(u => u.Id == id);
+        var filePath = GetFilePathForId(id);
 
-    }
+        if (!File.Exists(filePath))
+        {
+            return null;
+        }
 
-    public async Task<UserEntity> GetUserByName(string name)
-    {
-        _logger.LogInformation("Getting user {name}", name);
-        
-        var entities = await GetEntitiesFromFile();
-        return entities.FirstOrDefault(u => u.Name == name);
+        return JsonSerializer.Deserialize<UserEntity>(await File.ReadAllBytesAsync(filePath));
     }
 
     public async Task<UserEntity> AddUser(UserEntity newUser)
     {
-        _logger.LogInformation("Adding user session {id}", newUser.Id);
-        
-        var entities = await GetEntitiesFromFile();
-        
-        entities.Add(newUser);
-        await SaveToFileAsync(entities);
-        UserChanged?.Invoke(this, (newUser, UserChangedAction.Added));
+        var filePath = GetFilePathForId(newUser.Id);
+
+        if (File.Exists(filePath))
+        {
+            throw new Exception($"User with id {newUser.Id} already exists.");
+        }
+
+        newUser.UserCreatedDate = DateTime.UtcNow;
+
+        await SaveToFileAsync(filePath, newUser);
+
         return newUser;
     }
-
+    
     public async Task<bool> UpdateUser(UserEntity updatedUser)
     {
         _logger.LogInformation("Updating user {id}", updatedUser.Id);
-        
-        var entities = await GetEntitiesFromFile();
 
-        var user = entities.FirstOrDefault(u => u.Id == updatedUser.Id);
-        if (user == null)
+        var filePath = GetFilePathForId(updatedUser.Id);
+
+        if (!File.Exists(filePath))
         {
             return false;
         }
 
-        user.Name = updatedUser.Name;
-        await SaveToFileAsync(entities);
+        updatedUser.UserCreatedDate = (await GetUserById(updatedUser.Id)).UserCreatedDate; // retain original created date
+
+        await SaveToFileAsync(filePath, updatedUser);
+
         UserChanged?.Invoke(this, (updatedUser, UserChangedAction.Updated));
+
         return true;
     }
-
+    
     public async Task<bool> DeleteUser(string id)
     {
         _logger.LogInformation("Deleting user {id}", id);
-        
-        var entities = await GetEntitiesFromFile();
 
-        var user = entities.FirstOrDefault(u => u.Id == id);
-        if (user == null)
+        var filePath = GetFilePathForId(id);
+
+        if (!File.Exists(filePath))
         {
             return false;
         }
 
-        entities.Remove(user);
-        await SaveToFileAsync(entities);
-        UserChanged?.Invoke(this, (user, UserChangedAction.Removed));
+        File.Delete(filePath);
+
+        UserChanged?.Invoke(this, (await GetUserById(id), UserChangedAction.Removed)); // We might want to get user before deleting for the event
+
         return true;
     }
-
+    
     public async Task<bool> LockUser(string id)
     {
         _logger.LogInformation("Locking user {id}", id);
-        if (string.IsNullOrEmpty(id))
-            return false;
-        
-        var entities = await GetEntitiesFromFile();
 
-        var user = entities.FirstOrDefault(u => u.Id == id);
-        
-        if (user is null)
+        var filePath = GetFilePathForId(id);
+
+        if (!File.Exists(filePath))
+        {
             return false;
-            
-        if (entities.FirstOrDefault(e => e.IsLocked is true) != null)
-            return false;
+        }
         
+        if (IsAnyUserLocked())
+        {
+            return false;
+        }
+        
+        var lockedFilePath = GetLockedFilePathForId(id);
+        var user = await GetUserById(id);
         user.IsLocked = true;
 
+        await SaveToFileAsync(filePath, user);
+        File.Move(filePath, lockedFilePath);
+        
+        UserChanged?.Invoke(this, (user, UserChangedAction.Updated));
+        
         // if something goes wrong, a task should unlock the user after 30 seconds
         _ = Task.Delay(45000).ContinueWith(async _ =>
         {
-            var entitiesUpd = await GetEntitiesFromFile();
-            var userUpd = entitiesUpd.FirstOrDefault(u => u.Id == id);
+            var lockedFilePathUpd = GetLockedFilePathForId(id);
 
-            if (userUpd?.IsLocked == true)
+            if (File.Exists(lockedFilePathUpd))
             {
                 _logger.LogWarning("User was locked for too long, unlocking {id}", id);
                 await UnlockUser(id);
             }
         });
         
-        await SaveToFileAsync(entities);
-        LockStatusChanged?.Invoke(this, true);
-        UserChanged?.Invoke(this, (user, UserChangedAction.Updated));
         return true;
     }
-
+    
     public async Task<bool> UnlockUser(string id)
     {
         _logger.LogInformation("Unlocking user {id}", id);
-        
-        var entities = await GetEntitiesFromFile();
 
-        UserEntity user = entities.FirstOrDefault(u => u.Id == id);
-        
-        if (user is null)
+        var lockedFilePath = GetLockedFilePathForId(id);
+        if (!File.Exists(lockedFilePath))
+        {
             return false;
+        }
         
+        var filePath = GetFilePathForId(id);
+        
+        File.Move(lockedFilePath, filePath);
+        
+        var user = await GetUserFromFile(filePath);
         user.IsLocked = false;
+        await SaveToFileAsync(filePath, user);
 
-        await SaveToFileAsync(entities);
-        LockStatusChanged?.Invoke(this, false);
         UserChanged?.Invoke(this, (user, UserChangedAction.Updated));
+        LockStatusChanged?.Invoke(this, false);
+
         return true;
     }
 
-    public async Task<bool> IsLocked()
+    public Task<bool> IsLocked()
     {
-        var entities = await GetEntitiesFromFile();
-
-        return entities.FirstOrDefault(e => e.IsLocked is true) != null;
+        return Task.FromResult(IsAnyUserLocked());
     }
     
-    private async Task SaveToFileAsync(List<UserEntity> entities)
+    private async Task<UserEntity> GetUserFromFile(string filePath)
     {
-        var json = JsonSerializer.Serialize(entities, new JsonSerializerOptions() { WriteIndented = true });
-        var fullFilePath = Path.Combine("/app/data", _filePath);
-        await File.WriteAllTextAsync(fullFilePath, json);
+        try
+        {
+            var json = await File.ReadAllTextAsync(filePath);
+            return JsonSerializer.Deserialize<UserEntity>(json);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Error reading user file: {filePath}");
+            return null;
+        }
     }
 
-    private async Task<List<UserEntity>> GetEntitiesFromFile()
+    private async Task SaveToFileAsync(string filePath, UserEntity user)
     {
-        var fullFilePath = Path.Combine("/app/data", _filePath);
-        return JsonSerializer.Deserialize<List<UserEntity>>(await File.ReadAllBytesAsync(fullFilePath));
+        var json = JsonSerializer.Serialize(user, new JsonSerializerOptions { WriteIndented = true });
+
+        await File.WriteAllTextAsync(filePath, json);
+    }
+    
+    private bool IsAnyUserLocked() => Directory.EnumerateFiles(_directoryPath, "*_locked.json").Any();
+
+    private string GetFilePathForId(string id)
+    {
+        return Path.Combine(_directoryPath, $"{id}.json");
+    }
+    
+    private string GetLockedFilePathForId(string id)
+    {
+        return Path.Combine(_directoryPath, $"{id}_locked.json");
     }
 }

@@ -55,17 +55,6 @@ public class SessionManagerController : ControllerBase
         return Ok(user);
     }
 
-    [HttpGet("users/{name}")]
-    public async Task<IActionResult> GetUserByName(string name)
-    {
-        var user = await _sessionManagerService.GetUserByName(name);
-        if (user == null)
-        {
-            return NotFound();
-        }
-        return Ok(user);
-    }
-
     [HttpPut("users/")]
     public async Task<IActionResult> UpdateUser([FromBody] UserEntity updatedUser)
     {

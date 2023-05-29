@@ -4,10 +4,15 @@
     <projectFile profileName="http">ChatGPT.SessionManager.API/ChatGPT.SessionManager.API.csproj</projectFile>
     <projectFile profileName="https">ChatGPT.SessionManager.API/ChatGPT.SessionManager.API.csproj</projectFile>
   </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="756482cd-9671-46c1-a781-0926deacf736" name="Changes" comment="🏗️ use /app/data">
+    <list default="true" id="756482cd-9671-46c1-a781-0926deacf736" name="Changes" comment="🥅 change error handling">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ChatGPT.SessionManager.API/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChatGPT.SessionManager.API/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Controllers/SessionManagerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Controllers/SessionManagerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Interfaces/ISessionManagerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Interfaces/ISessionManagerService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Models/UserEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Models/UserEntity.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,32 +34,10 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/446c18fe807a44d584df912b93dadb01ca00/c1/e05b6bc6/IQueryCollection.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4f115105ac3746e2ab2b709cf9737229ae3400/63/7665d06a/EventHandler`1.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1dad7066d59e42d92476c5ad1180c2b63352d32689dd3d3be2bb2aa26b3bea5/ControllerBase.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/252148a2e25a757a74a4ee51f2628671c05ffb5aad3d6a9d474bbf8bf622ad42/NoContentResult.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3684e888fd93508450e2f4b0d7d38bee648cba98882592491596fc79375185f/SwaggerMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/484917e236e092d5ce76c5f373993d21fb07a86c2912aaaec5db139b77ac48/SwaggerGenServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/574853d25fcb63d3d22049457b998cdb85c7faa2e9b88a2c190472274663834/HashHelpers.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5bc6d9b34ff4b31aaeedc574c16c295c2ea1bf766263acdc195d97b3f7751f/HttpProtocol.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5cad7c20a79c1ea9f28e322df17044d3c4ee25a34b985313c3a93050e2b462/AuthenticateResult.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/60e6d97cdcb4e39dc81cc4c39f04cb6a947ffc1e1ab46312775b3015274/NoopClaimsTransformation.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/67f7539d797bafe632d6a363735c72258a6729ef2e68d3fcc1a09230a351/AuthenticationBuilder.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/731accae43643d3bdb4dd4b4f691956abb552eaab7d4b85e21478c4e2db/AuthenticationOptions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7350d9bb7b226db2f95f95272cf4db809f34538a3e6e952f75ace3a5528d42ac/EndpointMethodInfoApiExplorerServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/73cf7de234df6b0776a34ba71afef7ad5cadf96565c61de6ced2273b1b72e8/WebSocketMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/781ebca67bd71532948352c2c24f8db410449e3c21f7191a17bf21348cd4fed4/SwaggerUIMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7845fcc4c6e97e7a0812786262db174ec05f208cd3e814d0a7bf29d0d6ef5f/ConfigurationManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7afddd39c72d581e7dd4f277f2a3410966dbf3c46e6e77a71143cd8efbe7fe0/AuthenticationHandler.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/82f3bb64e8c52af0a0175218c6cd371f393f871ffe1482a2ffd51e7efaeddbb5/Task.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/85444b87515266794f71448c4f4bd6c1bde1cbd93fe1721b9221ae0dd4ebc93/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/af4334de129e2087dbc483c3bb6364e74dfe1f395ca942fdf9c97357a6629/DeveloperExceptionPageMiddlewareImpl.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b8d6f21db577ff995fa859bf972f26ad0598805c62ba36f2b42293170f8/AuthenticationMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bf9021a960b74107a7e141aa06bc9d8a0a53c929178c2fb95b1597be8af8dc/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c2eb2d10644a4143cf182f99f019e9f696e4638e6146ed2c3923dec85668d2/ReferenceCountedProvidersManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f01a76a3cd12e3feae677a831406e72ecba4967c774b7290f76bb757ee201c/AuthenticationService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f32946d596a3aa2d9b3b0d4c18b2f461cbf94c2fe694f3ad483a36897c218f/HashSet.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ChatGPT.SessionManager.API/Controllers/SessionManagerController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Controllers/SessionManagerController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -65,27 +48,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.50076336&quot;,
-    &quot;com.github.patou.gitmoji.display-icon&quot;: &quot;emoji&quot;,
-    &quot;com.github.patou.gitmoji.text-after-unicode&quot;: &quot; &quot;,
-    &quot;com.github.patou.gitmoji.use-unicode&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/paul/repos/ChatGPT.SessionManager.API/values.yaml&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.github.patou.gitmoji.config&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "XThreadsFramesViewSplitterKey": "0.50076336",
+    "com.github.patou.gitmoji.display-icon": "emoji",
+    "com.github.patou.gitmoji.text-after-unicode": " ",
+    "com.github.patou.gitmoji.use-unicode": "true",
+    "last_opened_file_path": "/home/paul/repos/ChatGPT.SessionManager.API/values.yaml",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "com.github.patou.gitmoji.config",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;/home/paul/.config/JetBrains/Rider2022.3/resharper-host/DecompilerCache&quot;,
-      &quot;/home/paul/.config/JetBrains/Rider2022.3/resharper-host/SourcesCache&quot;,
-      &quot;/home/paul/.local/share/Symbols/src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "/home/paul/.config/JetBrains/Rider2023.1/resharper-host/DecompilerCache",
+      "/home/paul/.config/JetBrains/Rider2023.1/resharper-host/SourcesCache",
+      "/home/paul/.local/share/Symbols/src"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.ChatGPT.SessionManager.API: http">
     <configuration name="ChatGPT.SessionManager.API: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/ChatGPT.SessionManager.API/ChatGPT.SessionManager.API.csproj" />
@@ -143,7 +130,10 @@
       <workItem from="1684589540717" duration="3274000" />
       <workItem from="1684593164228" duration="3569000" />
       <workItem from="1684683512876" duration="1194000" />
-      <workItem from="1685312925078" duration="1208000" />
+      <workItem from="1685312925078" duration="1614000" />
+      <workItem from="1685374699757" duration="848000" />
+      <workItem from="1685388683654" duration="113000" />
+      <workItem from="1685388968351" duration="3624000" />
     </task>
     <task id="LOCAL-00001" summary="🏗️ add service and users can be added/deleted/...">
       <created>1682711789836</created>
@@ -278,7 +268,35 @@
       <option name="project" value="LOCAL" />
       <updated>1685302327112</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="🏗️ use longhorn persistent storage">
+      <created>1685314431312</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1685314431312</updated>
+    </task>
+    <task id="LOCAL-00021" summary="🔧 use 1 replica">
+      <created>1685374946959</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1685374946959</updated>
+    </task>
+    <task id="LOCAL-00022" summary="🔥">
+      <created>1685388785849</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1685388785849</updated>
+    </task>
+    <task id="LOCAL-00023" summary="🥅 change error handling">
+      <created>1685389016461</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1685389016461</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -307,20 +325,24 @@
     <MESSAGE value="change health check order" />
     <MESSAGE value=" add logging to WebSocketMiddleware.cs" />
     <MESSAGE value="️ use /app/data" />
-    <option name="LAST_COMMIT_MESSAGE" value="️ use /app/data" />
+    <MESSAGE value="️ use longhorn persistent storage" />
+    <MESSAGE value=" use 1 replica" />
+    <MESSAGE value="" />
+    <MESSAGE value=" change error handling" />
+    <option name="LAST_COMMIT_MESSAGE" value=" change error handling" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/ChatGPT.SessionManager.API/Services/SessionManagerService.cs</url>
-          <line>21</line>
-          <properties documentPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" initialLine="21" containingFunctionPresentation="constructor 'SessionManagerService'">
+          <line>133</line>
+          <properties documentPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" initialLine="133" containingFunctionPresentation="Lambda expression inside Method 'LockUser'">
             <startOffsets>
-              <option value="687" />
+              <option value="3678" />
             </startOffsets>
             <endOffsets>
-              <option value="688" />
+              <option value="3729" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="1" />
