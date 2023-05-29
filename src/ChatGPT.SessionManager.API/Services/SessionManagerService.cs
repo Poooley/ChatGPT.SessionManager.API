@@ -27,7 +27,7 @@ public class SessionManagerService : ISessionManagerService
         }
         catch (Exception e)
         {
-            logger.LogError("Something went wrong creating the user file", e);
+            //logger.LogError("Something went wrong creating the user file", e);
         }
     }
 
