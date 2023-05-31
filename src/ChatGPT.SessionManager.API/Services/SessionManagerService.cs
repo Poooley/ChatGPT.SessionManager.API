@@ -174,14 +174,17 @@ public class SessionManagerService : ISessionManagerService
 
     public void Cleanup()
     {
+        _logger.LogInformation("Cleaning up users");
         // Cleanup users which are older than 2 days
         var files = Directory.EnumerateFiles(_directoryPath, "*.json")
-            .Where(f => DateTime.UtcNow - File.GetCreationTimeUtc(f) > TimeSpan.FromDays(2));
+            .Where(f => DateTime.UtcNow - File.GetCreationTimeUtc(f) > TimeSpan.FromDays(1)).ToList();
 
         foreach (var file in files)
         {
             File.Delete(file);
         }
+        
+        _logger.LogInformation("Cleaned up {count} users", files.Count());
     }
 
     private async Task<UserEntity> GetUserFromFile(string filePath)
