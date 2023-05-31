@@ -58,7 +58,7 @@ public class SessionManagerService : ISessionManagerService
             throw new Exception($"User with id {newUser.Id} already exists.");
         }
 
-        newUser.UserCreatedDate = DateTime.UtcNow;
+        newUser.LastInteractionDate = DateTime.UtcNow;
 
         await SaveToFileAsync(filePath, newUser);
 
@@ -76,7 +76,7 @@ public class SessionManagerService : ISessionManagerService
             return false;
         }
 
-        updatedUser.UserCreatedDate = (await GetUserById(updatedUser.Id)).UserCreatedDate; // retain original created date
+        updatedUser.LastInteractionDate = DateTime.UtcNow;
 
         await SaveToFileAsync(filePath, updatedUser);
 
@@ -122,6 +122,8 @@ public class SessionManagerService : ISessionManagerService
         var lockedFilePath = GetLockedFilePathForId(id);
         var user = await GetUserById(id);
         user.IsLocked = true;
+        user.LockDate = DateTime.UtcNow;
+        user.LastInteractionDate = DateTime.UtcNow;
 
         await SaveToFileAsync(filePath, user);
         File.Move(filePath, lockedFilePath);
@@ -129,7 +131,7 @@ public class SessionManagerService : ISessionManagerService
         UserChanged?.Invoke(this, (user, UserChangedAction.Updated));
         
         // if something goes wrong, a task should unlock the user after 30 seconds
-        _ = Task.Delay(45000).ContinueWith(async _ =>
+        _ = Task.Delay(45_000).ContinueWith(async _ =>
         {
             var lockedFilePathUpd = GetLockedFilePathForId(id);
 
@@ -159,6 +161,9 @@ public class SessionManagerService : ISessionManagerService
         
         var user = await GetUserFromFile(filePath);
         user.IsLocked = false;
+        user.LastInteractionDate = DateTime.UtcNow;
+        user.LockDate = null;
+        
         await SaveToFileAsync(filePath, user);
 
         UserChanged?.Invoke(this, (user, UserChangedAction.Updated));
@@ -177,7 +182,7 @@ public class SessionManagerService : ISessionManagerService
         _logger.LogInformation("Cleaning up users");
         // Cleanup users which are older than 2 days
         var files = Directory.EnumerateFiles(_directoryPath, "*.json")
-            .Where(f => DateTime.UtcNow - File.GetCreationTimeUtc(f) > TimeSpan.FromDays(1)).ToList();
+            .Where(f => DateTime.UtcNow - File.GetCreationTimeUtc(f) > TimeSpan.FromHours(12)).ToList();
 
         foreach (var file in files)
         {
@@ -185,6 +190,9 @@ public class SessionManagerService : ISessionManagerService
         }
         
         _logger.LogInformation("Cleaned up {count} users", files.Count());
+        
+        // Cleanup locked users which are older than 45 seconds
+        _ = Task.Run(BlockingCleanup);
     }
 
     private async Task<UserEntity> GetUserFromFile(string filePath)
@@ -196,7 +204,7 @@ public class SessionManagerService : ISessionManagerService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"Error reading user file: {filePath}");
+            _logger.LogError(ex, $"Error reading  user file: {filePath}");
             return null;
         }
     }
@@ -208,8 +216,40 @@ public class SessionManagerService : ISessionManagerService
         await File.WriteAllTextAsync(filePath, json);
     }
     
+    public async Task SaveLastUserInteractionDateAndCheckBlocking(string id)
+    {
+        var filePath = GetFilePathForId(id);
+
+        if (!File.Exists(filePath))
+        {
+            return;
+        }
+
+        var user = await GetUserById(id);
+        user.LastInteractionDate = DateTime.UtcNow;
+        
+        await SaveToFileAsync(filePath, user);
+        await BlockingCleanup();
+    }
+    
     private bool IsAnyUserLocked() => Directory.EnumerateFiles(_directoryPath, "*_locked.json").Any();
 
+    // Check if any user is locked and if it is blocking longer than 45 seconds => remove lock
+    private async Task BlockingCleanup()
+    {
+        if (!IsAnyUserLocked())
+            return;
+
+        var lockedFilePath = Directory.EnumerateFiles(_directoryPath, "*_locked.json").First();
+        var user = await GetUserFromFile(lockedFilePath);
+        
+        if (user.LockDate?.AddSeconds(45) > DateTime.UtcNow)
+            return;
+        
+        _logger.LogWarning("User was locked for too long, unlocking {id}", user.Id);
+        await UnlockUser(user.Id);
+    }
+    
     private string GetFilePathForId(string id)
     {
         return Path.Combine(_directoryPath, $"{id}.json");

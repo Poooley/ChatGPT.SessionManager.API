@@ -8,9 +8,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="756482cd-9671-46c1-a781-0926deacf736" name="Changes" comment="🥅 change error handling">
+    <list default="true" id="756482cd-9671-46c1-a781-0926deacf736" name="Changes" comment="🔊 add logging">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ChatGPT.SessionManager.API/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChatGPT.SessionManager.API/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Services/WebSocketMiddleware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Services/WebSocketMiddleware.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Controllers/SessionManagerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Controllers/SessionManagerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Interfaces/ISessionManagerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Interfaces/ISessionManagerService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Models/UserEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Models/UserEntity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,10 +34,18 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Controllers/SessionManagerController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ChatGPT.SessionManager.API/Controllers/SessionManagerController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Controllers/SessionManagerController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Interfaces/ISessionManagerService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Interfaces/ISessionManagerService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Interfaces/ISessionManagerService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Services/WebSocketMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Services/WebSocketMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -131,7 +142,7 @@
       <workItem from="1685374699757" duration="848000" />
       <workItem from="1685388683654" duration="113000" />
       <workItem from="1685388968351" duration="3624000" />
-      <workItem from="1685554072782" duration="368000" />
+      <workItem from="1685554072782" duration="4616000" />
     </task>
     <task id="LOCAL-00001" summary="🏗️ add service and users can be added/deleted/...">
       <created>1682711789836</created>
@@ -294,7 +305,21 @@
       <option name="project" value="LOCAL" />
       <updated>1685389016461</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="🗑️ add users cleanup method">
+      <created>1685554792434</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1685554792434</updated>
+    </task>
+    <task id="LOCAL-00025" summary="🔊 add logging">
+      <created>1685554890408</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1685554890408</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -302,6 +327,17 @@
   </component>
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="️ add service and users can be added/deleted/..." />
@@ -327,25 +363,8 @@
     <MESSAGE value=" use 1 replica" />
     <MESSAGE value="" />
     <MESSAGE value=" change error handling" />
-    <option name="LAST_COMMIT_MESSAGE" value=" change error handling" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/ChatGPT.SessionManager.API/Services/SessionManagerService.cs</url>
-          <line>133</line>
-          <properties documentPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" initialLine="133" containingFunctionPresentation="Lambda expression inside Method 'LockUser'">
-            <startOffsets>
-              <option value="3678" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3729" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="️ add users cleanup method" />
+    <MESSAGE value=" add logging" />
+    <option name="LAST_COMMIT_MESSAGE" value=" add logging" />
   </component>
 </project>

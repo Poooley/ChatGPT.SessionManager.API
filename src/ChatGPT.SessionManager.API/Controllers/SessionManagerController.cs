@@ -23,11 +23,14 @@ public class SessionManagerController : ControllerBase
         _sessionManagerService = sessionManagerService;
     }
     
-    [HttpGet("generate-token")]
-    public IActionResult GenerateToken()
+    [HttpGet("generate-token/{id}")]
+    public async Task<IActionResult> GenerateToken(string id)
     {
         var token = Guid.NewGuid().ToString();
         _cache.Set(token, true, TimeSpan.FromMinutes(5));
+        _logger.LogInformation($"Token generated for user {id}");
+        await _sessionManagerService.SaveLastUserInteractionDateAndCheckBlocking(id);
+        
         return Ok(new { token });
     }
 
@@ -44,7 +47,7 @@ public class SessionManagerController : ControllerBase
         return await _sessionManagerService.GetAllUsers();
     }
 
-    [HttpGet("users/{id:int}")]
+    [HttpGet("users/{id}")]
     public async Task<IActionResult> GetUserById(string id)
     {
         var user = await _sessionManagerService.GetUserById(id);
@@ -110,7 +113,7 @@ public class SessionManagerController : ControllerBase
     }
     
     [HttpGet("users/cleanup")]
-    public async Task<IActionResult> CleanupUsers()
+    public IActionResult CleanupUsers()
     {
         _sessionManagerService.Cleanup();
         

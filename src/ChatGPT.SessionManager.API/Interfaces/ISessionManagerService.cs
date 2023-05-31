@@ -16,4 +16,5 @@ public interface ISessionManagerService
     Task<bool> UnlockUser(string id);
     Task<bool> IsLocked();
     public void Cleanup();
+    Task SaveLastUserInteractionDateAndCheckBlocking(string id);
 }
