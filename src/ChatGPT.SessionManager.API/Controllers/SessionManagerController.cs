@@ -108,4 +108,12 @@ public class SessionManagerController : ControllerBase
         
         return Ok(result);
     }
+    
+    [HttpGet("users/cleanup")]
+    public async Task<IActionResult> CleanupUsers()
+    {
+        _sessionManagerService.Cleanup();
+        
+        return Ok();
+    }
 }

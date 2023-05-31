@@ -10,10 +10,7 @@
   <component name="ChangeListManager">
     <list default="true" id="756482cd-9671-46c1-a781-0926deacf736" name="Changes" comment="🥅 change error handling">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ChatGPT.SessionManager.API/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChatGPT.SessionManager.API/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Controllers/SessionManagerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Controllers/SessionManagerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Interfaces/ISessionManagerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Interfaces/ISessionManagerService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Models/UserEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Models/UserEntity.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Services/WebSocketMiddleware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Services/WebSocketMiddleware.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,31 +45,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "XThreadsFramesViewSplitterKey": "0.50076336",
-    "com.github.patou.gitmoji.display-icon": "emoji",
-    "com.github.patou.gitmoji.text-after-unicode": " ",
-    "com.github.patou.gitmoji.use-unicode": "true",
-    "last_opened_file_path": "/home/paul/repos/ChatGPT.SessionManager.API/values.yaml",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "com.github.patou.gitmoji.config",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.50076336&quot;,
+    &quot;com.github.patou.gitmoji.display-icon&quot;: &quot;emoji&quot;,
+    &quot;com.github.patou.gitmoji.text-after-unicode&quot;: &quot; &quot;,
+    &quot;com.github.patou.gitmoji.use-unicode&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/paul/repos/ChatGPT.SessionManager.API/values.yaml&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.github.patou.gitmoji.config&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "/home/paul/.config/JetBrains/Rider2023.1/resharper-host/DecompilerCache",
-      "/home/paul/.config/JetBrains/Rider2023.1/resharper-host/SourcesCache",
-      "/home/paul/.local/share/Symbols/src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;/home/paul/.config/JetBrains/Rider2023.1/resharper-host/DecompilerCache&quot;,
+      &quot;/home/paul/.config/JetBrains/Rider2023.1/resharper-host/SourcesCache&quot;,
+      &quot;/home/paul/.local/share/Symbols/src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.ChatGPT.SessionManager.API: http">
     <configuration name="ChatGPT.SessionManager.API: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/ChatGPT.SessionManager.API/ChatGPT.SessionManager.API.csproj" />
@@ -134,6 +131,7 @@
       <workItem from="1685374699757" duration="848000" />
       <workItem from="1685388683654" duration="113000" />
       <workItem from="1685388968351" duration="3624000" />
+      <workItem from="1685554072782" duration="368000" />
     </task>
     <task id="LOCAL-00001" summary="🏗️ add service and users can be added/deleted/...">
       <created>1682711789836</created>

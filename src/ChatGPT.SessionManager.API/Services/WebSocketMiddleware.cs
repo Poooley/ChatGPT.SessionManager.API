@@ -55,7 +55,8 @@ public class WebSocketMiddleware
     {
         var socketId = Guid.NewGuid();
         _sockets.TryAdd(socketId, webSocket);
-
+        
+        _logger.LogDebug("WebSocket connection added to dictionary");
         // Subscribe to events in the SessionManagerService
         _sessionManagerService.UserChanged += SendUserChangedNotification;
         _sessionManagerService.LockStatusChanged += SendLockStatusChangedNotification;
@@ -71,6 +72,7 @@ public class WebSocketMiddleware
         } while (!result.CloseStatus.HasValue);
         
         // Clean up when the WebSocket is closed
+        _logger.LogDebug("WebSocket connection closed");
         _sockets.TryRemove(socketId, out _);
         _sessionManagerService.UserChanged -= SendUserChangedNotification;
         _sessionManagerService.LockStatusChanged -= SendLockStatusChangedNotification;

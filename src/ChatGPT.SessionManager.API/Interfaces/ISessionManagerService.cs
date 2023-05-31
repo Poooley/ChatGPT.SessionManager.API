@@ -15,4 +15,5 @@ public interface ISessionManagerService
     Task<bool> LockUser(string id);
     Task<bool> UnlockUser(string id);
     Task<bool> IsLocked();
+    public void Cleanup();
 }

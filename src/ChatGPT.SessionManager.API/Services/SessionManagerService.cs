@@ -171,7 +171,19 @@ public class SessionManagerService : ISessionManagerService
     {
         return Task.FromResult(IsAnyUserLocked());
     }
-    
+
+    public void Cleanup()
+    {
+        // Cleanup users which are older than 2 days
+        var files = Directory.EnumerateFiles(_directoryPath, "*.json")
+            .Where(f => DateTime.UtcNow - File.GetCreationTimeUtc(f) > TimeSpan.FromDays(2));
+
+        foreach (var file in files)
+        {
+            File.Delete(file);
+        }
+    }
+
     private async Task<UserEntity> GetUserFromFile(string filePath)
     {
         try
