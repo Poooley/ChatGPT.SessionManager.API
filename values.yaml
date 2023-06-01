@@ -14,4 +14,4 @@ env:
 
 autoscaling:
   vpa:
-    enabled: false
+    enabled: true
