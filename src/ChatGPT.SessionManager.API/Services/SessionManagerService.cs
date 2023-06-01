@@ -177,22 +177,28 @@ public class SessionManagerService : ISessionManagerService
         return Task.FromResult(IsAnyUserLocked());
     }
 
-    public void Cleanup()
+    public async Task Cleanup()
     {
         _logger.LogInformation("Cleaning up users");
-        // Cleanup users which are older than 2 days
-        var files = Directory.EnumerateFiles(_directoryPath, "*.json")
-            .Where(f => DateTime.UtcNow - File.GetCreationTimeUtc(f) > TimeSpan.FromHours(12)).ToList();
+        // Cleanup users which have a LastInteractionDate older than 12 hours
+        var files = Directory.EnumerateFiles(_directoryPath, "*.json").ToList();
 
+        var usersDeleted = 0;
+        
         foreach (var file in files)
         {
+            var user = await GetUserFromFile(file);
+            if (user.LastInteractionDate.AddHours(12) > DateTime.UtcNow)
+                continue;
+            
             File.Delete(file);
+            usersDeleted++;
         }
         
-        _logger.LogInformation("Cleaned up {count} users", files.Count());
+        _logger.LogInformation("Cleaned up {count} users", usersDeleted);
         
         // Cleanup locked users which are older than 45 seconds
-        _ = Task.Run(BlockingCleanup);
+        await BlockingCleanup();
     }
 
     private async Task<UserEntity> GetUserFromFile(string filePath)
@@ -240,14 +246,18 @@ public class SessionManagerService : ISessionManagerService
         if (!IsAnyUserLocked())
             return;
 
-        var lockedFilePath = Directory.EnumerateFiles(_directoryPath, "*_locked.json").First();
-        var user = await GetUserFromFile(lockedFilePath);
+        var lockedFilePaths = Directory.EnumerateFiles(_directoryPath, "*_locked.json");
+
+        foreach (var lockedFilePath in lockedFilePaths)
+        {
+            var user = await GetUserFromFile(lockedFilePath);
         
-        if (user.LockDate?.AddSeconds(45) > DateTime.UtcNow)
-            return;
+            if (user.LockDate?.AddSeconds(45) > DateTime.UtcNow)
+                return;
         
-        _logger.LogWarning("User was locked for too long, unlocking {id}", user.Id);
-        await UnlockUser(user.Id);
+            _logger.LogWarning("User was locked for too long, unlocking {id}", user.Id);
+            await UnlockUser(user.Id);
+        }
     }
     
     private string GetFilePathForId(string id)

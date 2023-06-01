@@ -8,12 +8,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="756482cd-9671-46c1-a781-0926deacf736" name="Changes" comment="🔊 add logging">
+    <list default="true" id="756482cd-9671-46c1-a781-0926deacf736" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ChatGPT.SessionManager.API/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChatGPT.SessionManager.API/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Controllers/SessionManagerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Controllers/SessionManagerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Interfaces/ISessionManagerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Interfaces/ISessionManagerService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Models/UserEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Models/UserEntity.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +33,7 @@
     <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Controllers/SessionManagerController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ChatGPT.SessionManager.API/Controllers/SessionManagerController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Controllers/SessionManagerController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Interfaces/ISessionManagerService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Interfaces/ISessionManagerService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Interfaces/ISessionManagerService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Interfaces/ISessionManagerService.cs" root0="SKIP_HIGHLIGHTING" />
@@ -142,7 +139,7 @@
       <workItem from="1685374699757" duration="848000" />
       <workItem from="1685388683654" duration="113000" />
       <workItem from="1685388968351" duration="3624000" />
-      <workItem from="1685554072782" duration="4616000" />
+      <workItem from="1685554072782" duration="6403000" />
     </task>
     <task id="LOCAL-00001" summary="🏗️ add service and users can be added/deleted/...">
       <created>1682711789836</created>
@@ -319,7 +316,21 @@
       <option name="project" value="LOCAL" />
       <updated>1685554890408</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="🗑️ add cleanup, lock safe check etc">
+      <created>1685562584996</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1685562584996</updated>
+    </task>
+    <task id="LOCAL-00027" summary="⚡️ use alpine">
+      <created>1685562729827</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1685562729827</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -340,8 +351,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="️ add service and users can be added/deleted/..." />
-    <MESSAGE value="✨ add lock/unlock, new model, fixes" />
     <MESSAGE value="✨ add endpoint lock/unlock, fixes" />
     <MESSAGE value="️ wrong word syntax" />
     <MESSAGE value=" fix wrong name for method" />
@@ -365,6 +374,8 @@
     <MESSAGE value=" change error handling" />
     <MESSAGE value="️ add users cleanup method" />
     <MESSAGE value=" add logging" />
-    <option name="LAST_COMMIT_MESSAGE" value=" add logging" />
+    <MESSAGE value="️ add cleanup, lock safe check etc" />
+    <MESSAGE value="⚡️ use alpine" />
+    <option name="LAST_COMMIT_MESSAGE" value="⚡️ use alpine" />
   </component>
 </project>
