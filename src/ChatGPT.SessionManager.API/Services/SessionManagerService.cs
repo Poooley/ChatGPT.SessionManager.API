@@ -129,7 +129,8 @@ public class SessionManagerService : ISessionManagerService
         File.Move(filePath, lockedFilePath);
         
         UserChanged?.Invoke(this, (user, UserChangedAction.Updated));
-        
+        LockStatusChanged?.Invoke(this, true);
+
         // if something goes wrong, a task should unlock the user after 30 seconds
         _ = Task.Delay(45_000).ContinueWith(async _ =>
         {
