@@ -13,5 +13,7 @@ env:
         key: secret
 
 autoscaling:
+  hpa:
+    enabled: false
   vpa:
     enabled: true
