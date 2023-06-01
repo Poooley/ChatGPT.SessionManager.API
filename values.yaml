@@ -1,5 +1,6 @@
 ingress:
   path: /api/session-manager
+  affinity: true
   
 persistence:
   enabled: true
