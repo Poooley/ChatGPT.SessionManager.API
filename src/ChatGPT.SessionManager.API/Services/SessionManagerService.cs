@@ -192,6 +192,7 @@ public class SessionManagerService : ISessionManagerService
             if (user.LastInteractionDate.AddHours(12) > DateTime.UtcNow)
                 continue;
             
+            UserChanged?.Invoke(this, (user, UserChangedAction.Removed));
             File.Delete(file);
             usersDeleted++;
         }
