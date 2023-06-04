@@ -8,7 +8,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="756482cd-9671-46c1-a781-0926deacf736" name="Changes" comment="add ws" />
+    <list default="true" id="756482cd-9671-46c1-a781-0926deacf736" name="Changes" comment="🚀 change path">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ChatGPT.SessionManager.API/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChatGPT.SessionManager.API/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -129,7 +131,7 @@
       <workItem from="1685554072782" duration="6403000" />
       <workItem from="1685597109318" duration="843000" />
       <workItem from="1685615909279" duration="2422000" />
-      <workItem from="1685904837990" duration="305000" />
+      <workItem from="1685904837990" duration="1836000" />
     </task>
     <task id="LOCAL-00001" summary="🏗️ add service and users can be added/deleted/...">
       <created>1682711789836</created>
@@ -348,7 +350,28 @@
       <option name="project" value="LOCAL" />
       <updated>1685905032889</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="🔥 rm PROJECT_PATH">
+      <created>1685905290436</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1685905290436</updated>
+    </task>
+    <task id="LOCAL-00033" summary="🚀 may fix vpa">
+      <created>1685905968101</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1685905968101</updated>
+    </task>
+    <task id="LOCAL-00034" summary="🚀 change path">
+      <created>1685906048583</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1685906048583</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -356,6 +379,17 @@
   </component>
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
+      </list>
+    </option>
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
@@ -369,9 +403,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value=" add websockets ... (without authentication)" />
-    <MESSAGE value="✨ add to popup.js websocket support" />
-    <MESSAGE value=" token system added for websockets" />
     <MESSAGE value=" deploy stuff on kubernetes" />
     <MESSAGE value="✨ add files" />
     <MESSAGE value="️ dockerfile adjusted" />
@@ -394,6 +425,9 @@
     <MESSAGE value="add lock to true" />
     <MESSAGE value=" affinity header =&gt; true" />
     <MESSAGE value="add ws" />
-    <option name="LAST_COMMIT_MESSAGE" value="add ws" />
+    <MESSAGE value=" rm PROJECT_PATH" />
+    <MESSAGE value=" may fix vpa" />
+    <MESSAGE value=" change path" />
+    <option name="LAST_COMMIT_MESSAGE" value=" change path" />
   </component>
 </project>
