@@ -21,6 +21,6 @@ jobs:
     - uses: Poooley/K8s.Pipelines/Deploy.NET@main
       with:
         SERVICE_NAME: "api-session-manager"
-        VALUES_FILE: "./values.yaml"
+        VALUES_FILE: "values.yaml"
         DOCKER_TOKEN: ${{ secrets.ACTION_TOKEN }}
         KUBECONFIG: ${{ secrets.KUBECONFIG }}
