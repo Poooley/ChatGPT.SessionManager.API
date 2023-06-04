@@ -8,7 +8,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="756482cd-9671-46c1-a781-0926deacf736" name="Changes" comment="">
+    <list default="true" id="756482cd-9671-46c1-a781-0926deacf736" name="Changes" comment="🧵 affinity header =&gt; true">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ChatGPT.SessionManager.API/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChatGPT.SessionManager.API/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -30,19 +30,8 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Controllers/SessionManagerController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ChatGPT.SessionManager.API/Controllers/SessionManagerController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Controllers/SessionManagerController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Interfaces/ISessionManagerService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Interfaces/ISessionManagerService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Interfaces/ISessionManagerService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Interfaces/ISessionManagerService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Services/SessionManagerService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Services/WebSocketMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///home/paul/repos/ChatGPT.SessionManager.API/src/ChatGPT.SessionManager.API/Services/WebSocketMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -140,6 +129,8 @@
       <workItem from="1685388683654" duration="113000" />
       <workItem from="1685388968351" duration="3624000" />
       <workItem from="1685554072782" duration="6403000" />
+      <workItem from="1685597109318" duration="843000" />
+      <workItem from="1685615909279" duration="2422000" />
     </task>
     <task id="LOCAL-00001" summary="🏗️ add service and users can be added/deleted/...">
       <created>1682711789836</created>
@@ -330,7 +321,28 @@
       <option name="project" value="LOCAL" />
       <updated>1685562729827</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="🗑️ cleanup method adjusted, other stuff">
+      <created>1685597738835</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1685597738835</updated>
+    </task>
+    <task id="LOCAL-00029" summary="add lock to true">
+      <created>1685616285426</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1685616285426</updated>
+    </task>
+    <task id="LOCAL-00030" summary="🧵 affinity header =&gt; true">
+      <created>1685616955375</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1685616955375</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -351,9 +363,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="✨ add endpoint lock/unlock, fixes" />
-    <MESSAGE value="️ wrong word syntax" />
-    <MESSAGE value=" fix wrong name for method" />
     <MESSAGE value="✨ if someone blocks =&gt; writing is disabled. not stable!" />
     <MESSAGE value=" add websockets ... (without authentication)" />
     <MESSAGE value="✨ add to popup.js websocket support" />
@@ -376,6 +385,9 @@
     <MESSAGE value=" add logging" />
     <MESSAGE value="️ add cleanup, lock safe check etc" />
     <MESSAGE value="⚡️ use alpine" />
-    <option name="LAST_COMMIT_MESSAGE" value="⚡️ use alpine" />
+    <MESSAGE value="️ cleanup method adjusted, other stuff" />
+    <MESSAGE value="add lock to true" />
+    <MESSAGE value=" affinity header =&gt; true" />
+    <option name="LAST_COMMIT_MESSAGE" value=" affinity header =&gt; true" />
   </component>
 </project>
