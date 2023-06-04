@@ -8,7 +8,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="756482cd-9671-46c1-a781-0926deacf736" name="Changes" comment="🚀 change path">
+    <list default="true" id="756482cd-9671-46c1-a781-0926deacf736" name="Changes" comment="🚚 change path">
+      <change beforePath="$PROJECT_DIR$/../.github/workflows/main.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../.github/workflows/main.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ChatGPT.SessionManager.API/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChatGPT.SessionManager.API/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -131,7 +132,7 @@
       <workItem from="1685554072782" duration="6403000" />
       <workItem from="1685597109318" duration="843000" />
       <workItem from="1685615909279" duration="2422000" />
-      <workItem from="1685904837990" duration="1836000" />
+      <workItem from="1685904837990" duration="2147000" />
     </task>
     <task id="LOCAL-00001" summary="🏗️ add service and users can be added/deleted/...">
       <created>1682711789836</created>
@@ -371,7 +372,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685906048583</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="🚚 change path">
+      <created>1685907114405</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1685907114405</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -403,7 +411,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value=" deploy stuff on kubernetes" />
     <MESSAGE value="✨ add files" />
     <MESSAGE value="️ dockerfile adjusted" />
     <MESSAGE value=" dockerfile adjusted" />
@@ -427,6 +434,7 @@
     <MESSAGE value="add ws" />
     <MESSAGE value=" rm PROJECT_PATH" />
     <MESSAGE value=" may fix vpa" />
+    <MESSAGE value=" change path" />
     <MESSAGE value=" change path" />
     <option name="LAST_COMMIT_MESSAGE" value=" change path" />
   </component>
