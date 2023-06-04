@@ -8,9 +8,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="756482cd-9671-46c1-a781-0926deacf736" name="Changes" comment="🧵 affinity header =&gt; true">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ChatGPT.SessionManager.API/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChatGPT.SessionManager.API/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="756482cd-9671-46c1-a781-0926deacf736" name="Changes" comment="add ws" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -131,6 +129,7 @@
       <workItem from="1685554072782" duration="6403000" />
       <workItem from="1685597109318" duration="843000" />
       <workItem from="1685615909279" duration="2422000" />
+      <workItem from="1685904837990" duration="305000" />
     </task>
     <task id="LOCAL-00001" summary="🏗️ add service and users can be added/deleted/...">
       <created>1682711789836</created>
@@ -342,7 +341,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685616955375</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="add ws">
+      <created>1685905032889</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1685905032889</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -363,7 +369,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-    <MESSAGE value="✨ if someone blocks =&gt; writing is disabled. not stable!" />
     <MESSAGE value=" add websockets ... (without authentication)" />
     <MESSAGE value="✨ add to popup.js websocket support" />
     <MESSAGE value=" token system added for websockets" />
@@ -388,6 +393,7 @@
     <MESSAGE value="️ cleanup method adjusted, other stuff" />
     <MESSAGE value="add lock to true" />
     <MESSAGE value=" affinity header =&gt; true" />
-    <option name="LAST_COMMIT_MESSAGE" value=" affinity header =&gt; true" />
+    <MESSAGE value="add ws" />
+    <option name="LAST_COMMIT_MESSAGE" value="add ws" />
   </component>
 </project>

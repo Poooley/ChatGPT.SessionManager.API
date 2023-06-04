@@ -10,7 +10,6 @@ jobs:
     steps:
     - uses: Poooley/K8s.Pipelines/Build.NET@main
       with:
-        PROJECT_PATH: ./src/ChatGPT.SessionManager.API/
         SERVICE_NAME: "api-session-manager"
         DOCKER_TOKEN: ${{ secrets.ACTION_TOKEN }}
 
