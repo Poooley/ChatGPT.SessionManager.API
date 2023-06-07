@@ -52,8 +52,9 @@ public class SessionManagerService : ISessionManagerService
     public async Task<UserEntity> AddUser(UserEntity newUser)
     {
         var filePath = GetFilePathForId(newUser.Id);
-
-        if (File.Exists(filePath))
+        var filePathLocked = GetLockedFilePathForId(newUser.Id);
+        
+        if (File.Exists(filePath) || File.Exists(filePathLocked))
         {
             throw new Exception($"User with id {newUser.Id} already exists.");
         }
